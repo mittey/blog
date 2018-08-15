@@ -11,6 +11,11 @@ jobs:
             - 'blog-dependencies-{{ checksum "package.json" }}'
             - blog-dependencies-
       - run:
+          name: Config git
+          command: >-
+            git config --global user.email "d.k.kulikov@gmail.com" && git config
+            --global user.name "mittey"
+      - run:
           name: Install packages
           command: yarn install
       - run:
