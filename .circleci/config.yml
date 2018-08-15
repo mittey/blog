@@ -18,7 +18,7 @@ jobs:
       - save_cache:
           key: 'blog-dependencies-{{ checksum "package.json" }}'
           paths:
-            - .git
+            - node_modules
       - run:
           name: Config git
           command: >-
