@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    branches:
+      only: master
     docker:
       - image: 'circleci/node:latest'
     working_directory: ~/repo
@@ -11,13 +13,17 @@ jobs:
             - 'blog-dependencies-{{ checksum "package.json" }}'
             - blog-dependencies-
       - run:
+          name: Install packages
+          command: yarn install
+      - save_cache:
+          key: 'blog-dependencies-{{ checksum "package.json" }}'
+          paths:
+            - .git
+      - run:
           name: Config git
           command: >-
             git config --global user.email "d.k.kulikov@gmail.com" && git config
             --global user.name "mittey"
-      - run:
-          name: Install packages
-          command: yarn install
       - run:
           name: Build and push to gh-pages branch
           command: yarn deploy
